@@ -1,0 +1,11 @@
+---
+collections:
+  - name: community.docker
+    version: ">=5.0.1"
+
+
+roles:
+  - name: geerlingguy.nginx
+    version: "3.3.0"
+  - name: geerlingguy.certbot
+    version: "5.4.1" 
