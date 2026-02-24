@@ -1,4 +1,3 @@
-
 # install docker compose
 # configure user
 # configure firewall
@@ -16,7 +15,7 @@
 ---
 - name: Deployment Load Balancers
   hosts: webservers
-  become: true 
+  become: true
 
   roles:
     - nginx
