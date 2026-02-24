@@ -7,8 +7,9 @@
 ```
 vagrant up
 docker run --rm -ti -v $(pwd):/workdir alpine/ansible bash
-ansible-galaxy install -r workdir/roles/requirements.yml
+cd workdir
+ansible-galaxy install -r requirements.yml
 eval `ssh-agent -s`
 ssh-add id_rsa
-ansible-playbook -i 192.168.56.10, -u vagrant workdir/playbook.yml
+ansible-playbook -i inventory/dev -u vagrant playbook.yml
 ```
