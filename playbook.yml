@@ -14,7 +14,7 @@
 
 ---
 - name: Deployment Load Balancers
-  hosts: webservers
+  hosts: all
   become: true
 
   roles:
