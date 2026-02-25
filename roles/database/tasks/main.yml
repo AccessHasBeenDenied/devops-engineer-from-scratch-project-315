@@ -1,2 +1,26 @@
 ---
 # tasks file for database
+- name: Prepare Environment
+  block:
+    - name: Creating Data Dir
+      ansible.builtin.file:
+        path: "{{ database_data_dir }}"
+        state: directory
+        mode: '0750'
+    - name: Creating Log Dir
+      ansible.builtin.file:
+        path: "{{ database_log_dir }}"
+        state: directory
+        mode: '0750'
+
+- name: Run Environment
+  block:
+    - name: Start Database Container
+      community.docker.docker_container:
+        name: "{{ database_name }}"
+        image: "{{ database_image }}"
+        env: "{{ database_env }}"
+        ports: "{{ database_ports }}"
+        volumes:  "{{ database_volumes }}"
+        healthcheck: "{{ database_healthcheck }}"
+        state: started
