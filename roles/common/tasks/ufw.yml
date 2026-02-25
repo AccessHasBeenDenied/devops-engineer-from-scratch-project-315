@@ -1,0 +1,30 @@
+- name: Deny everything and enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: deny
+  
+- name: SSH Configuration
+  block:
+  - name: Enable SSH
+    community.general.ufw:
+      rule: allow
+      name: OpenSSH
+    when: ufw_enable_ssh
+    
+  - name: Rate limiting SSH 
+    community.general.ufw:
+      rule: limit
+      port: ssh
+      proto: tcp
+    when: ufw_limit_ssh
+
+- name: Custom rules
+  block:
+  - name: Custom rules
+    community.general.ufw:
+      rule: "{{ item.rule | default('deny') }}"
+      proto: "{{ item.proto }}"
+      src: "{{ item.src }}"
+      port: "{{ item.port }}"
+      comment: "{{ item.description | default('') }}"
+    loop: "{{ ufw_rules }}"

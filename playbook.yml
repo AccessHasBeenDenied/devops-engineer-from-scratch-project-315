@@ -1,22 +1,44 @@
-# install docker compose
-# configure user
-# configure firewall
-# certbot https://github.com/geerlingguy/ansible-role-certbot
-# configure nginx https://github.com/geerlingguy/ansible-role-nginx
-  # caching
-  # redirect to https
-# configure persistent volumes
-  # db
-  # migration
-  # app
-# configure s3
-# docker run
+# Что надо настроить:
+
+# webservers
+# - certbot https://github.com/geerlingguy/ansible-role-certbot
+# - configure nginx https://github.com/geerlingguy/ansible-role-nginx
+# - caching
+# - redirect to https
+
+# worker
+# - install docker compose
+# - configure user
+# - configure firewall
+# - configure persistent volumes
+# - configure s3
+# - docker run
+
+# db
+# - for db
+# -  migration
 
 ---
-- name: Deployment Load Balancers
-  hosts: all
+- name: Webservers Deployment
+  hosts: webservers
   become: true
-
   roles:
-    - nginx
-    - certbot
+    - role: common
+    - role: nginx
+    - role: certbot
+
+
+- name: Worker Deployment
+  hosts: workers
+  become: true
+  roles:
+    - role: common
+    - role: docker
+    - role: worker
+
+- name: Database Deployment
+  hosts: db
+  become: true
+  roles:
+    - role: common
+    - role: database

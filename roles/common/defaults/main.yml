@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for common
+
+common_apt_update: false
+common_apt_packages:
+  - ufw
+
+
+ufw_enable_ssh: true
+ufw_limit_ssh: true
+
+ufw_rules: []
+  # - description: Allow nginx
+  #   proto: tcp
+  #   src: 0.0.0.0
+  #   port: 80,443
+  #   rule: allow
