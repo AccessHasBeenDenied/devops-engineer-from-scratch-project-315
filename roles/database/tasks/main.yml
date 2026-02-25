@@ -15,7 +15,11 @@
 
 - name: Run Environment
   block:
-    - name: Start Database Container
+    - name: Pull database image
+      community.docker.docker_image_pull:
+        name: "{{ database_image }}"
+
+    - name: Create/Update Database Container
       community.docker.docker_container:
         name: "{{ database_name }}"
         image: "{{ database_image }}"
@@ -23,4 +27,14 @@
         ports: "{{ database_ports }}"
         volumes:  "{{ database_volumes }}"
         healthcheck: "{{ database_healthcheck }}"
+        state: present
+
+    - name: Start Database Container
+      community.docker.docker_container:
+        name: "{{ database_name }}"
         state: started
+
+    - name: Wait Healthy
+      community.docker.docker_container:
+        name: "{{ database_name }}"
+        state: healthy
