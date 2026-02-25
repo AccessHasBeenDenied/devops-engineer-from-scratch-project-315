@@ -27,7 +27,6 @@
     - role: nginx
     - role: certbot
 
-
 - name: Worker Deployment
   hosts: workers
   become: true
