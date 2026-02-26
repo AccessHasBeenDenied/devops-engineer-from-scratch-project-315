@@ -12,4 +12,5 @@ worker_ports:
 worker_volumes:
   - "{{ worker_data_dir }}:/app/worker/data"
 worker_healthcheck: {}
+worker_healthy_wait_timeout: 60
 worker_rollback: false

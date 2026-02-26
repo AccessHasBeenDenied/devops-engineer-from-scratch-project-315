@@ -18,3 +18,4 @@
   community.docker.docker_container:
     name: "{{ worker_name }}"
     state: healthy
+    healthy_wait_timeout: "{{ worker_healthy_wait_timeout }}"

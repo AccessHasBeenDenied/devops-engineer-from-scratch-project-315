@@ -38,3 +38,4 @@
       community.docker.docker_container:
         name: "{{ database_name }}"
         state: healthy
+        healthy_wait_timeout: "{{ database_healthy_wait_timeout }}"

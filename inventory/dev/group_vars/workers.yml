@@ -1,1 +1,11 @@
 worker_image: ghcr.io/accesshasbeendenied/project-devops-deploy:sha-549d32b
+worker_ports:
+  - 8080:8080
+  - 9090:9090
+
+worker_healthcheck:
+  test: ["CMD-SHELL", "wget --quiet --tries=1 -O /dev/null http://localhost:9090/actuator/health"]
+  interval: 10s
+  timeout: 5s
+  retries: 3
+  start_period: 30s
