@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "app-host" do |node|
     node.vm.hostname = "app-host"
     node.vm.network :private_network, ip: "192.168.56.10"
+    # node.vm.network :public_network, bridge: "enp5s1"
     node.vm.provider "vmware_desktop" do |vwd|
       vwd.ssh_info_public = true
       vwd.vmx["memsize"] = "4096"
