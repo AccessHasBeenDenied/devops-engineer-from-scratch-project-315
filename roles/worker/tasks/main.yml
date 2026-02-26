@@ -1,40 +1,20 @@
 ---
 # tasks file for worker
-- name: Prepare Environment
-  block:
-    - name: Creating Data Dir
-      ansible.builtin.file:
-        path: "{{ worker_data_dir }}"
-        state: directory
-        mode: '0750'
-    - name: Creating Log Dir
-      ansible.builtin.file:
-        path: "{{ worker_log_dir }}"
-        state: directory
-        mode: '0750'
+- name: Init Environment
+  ansible.builtin.include_tasks:
+    file: init_env.yml
 
 - name: Run Environment
   block:
-    - name: Pull image
-      community.docker.docker_image_pull:
-        name: "{{ worker_image }}"
-
-    - name: Create/Update Container
-      community.docker.docker_container:
-        name: "{{ worker_name }}"
-        image: "{{ worker_image }}"
-        env: "{{ worker_env }}"
-        ports: "{{ worker_ports }}"
-        volumes:  "{{ worker_volumes }}"
-        healthcheck: "{{ worker_healthcheck }}"
-        state: present
-
-    - name: Start Container
-      community.docker.docker_container:
-        name: "{{ worker_name }}"
-        state: started
-
-    - name: Wait Healthy
-      community.docker.docker_container:
-        name: "{{ worker_name }}"
-        state: healthy
+    - name: Deploy Container
+      ansible.builtin.include_tasks:
+        file: deploy_container.yml
+      vars:
+        current_image: "{{ worker_image }}"
+  rescue:
+    - name: RollBack Container
+      ansible.builtin.include_tasks:
+        file: deploy_container.yml
+      vars:
+        current_image: "{{ worker_previous_version }}"
+      when: worker_previous_version is defined

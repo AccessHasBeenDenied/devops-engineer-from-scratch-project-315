@@ -1,0 +1,20 @@
+- name: Pull image
+  community.docker.docker_image_pull:
+    name: "{{ current_image }}"
+- name: Create/Update Container
+  community.docker.docker_container:
+    name: "{{ worker_name }}"
+    image: "{{ current_image }}"
+    env: "{{ worker_env }}"
+    ports: "{{ worker_ports }}"
+    volumes:  "{{ worker_volumes }}"
+    healthcheck: "{{ worker_healthcheck }}"
+    state: present
+- name: Start Container
+  community.docker.docker_container:
+    name: "{{ worker_name }}"
+    state: started
+- name: Wait Healthy
+  community.docker.docker_container:
+    name: "{{ worker_name }}"
+    state: healthy
