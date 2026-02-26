@@ -1,6 +1,1 @@
-ufw_rules:
-  - description: Allow App
-    proto: tcp
-    src: 127.0.0.1
-    port: 8080
-    rule: allow
+worker_image: ghcr.io/accesshasbeendenied/project-devops-deploy:sha-549d32b

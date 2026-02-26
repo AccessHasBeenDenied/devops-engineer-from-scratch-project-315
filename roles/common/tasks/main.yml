@@ -3,5 +3,4 @@
 
 - name: Common Packages
   ansible.builtin.include_tasks: packages.yml
-- name: UFW Configuration
-  ansible.builtin.include_tasks: ufw.yml
+

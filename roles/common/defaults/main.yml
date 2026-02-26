@@ -2,15 +2,5 @@
 # defaults file for common
 
 common_apt_update: false
-common_apt_packages:
-  - ufw
+common_apt_packages: []
 
-common_ufw_enable_ssh: true
-common_ufw_limit_ssh: true
-
-common_ufw_rules: []
-  # - description: Allow nginx
-  #   proto: tcp
-  #   src: 0.0.0.0
-  #   port: 80,443
-  #   rule: allow

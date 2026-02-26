@@ -5,6 +5,7 @@ database_log_dir: /srv/logs/postgres
 
 database_name: postgres-16
 database_image: postgres:16
+database_restart_policy: unless-stopped
 database_env:
   POSTGRES_DB: postgres
   POSTGRES_USER: postgres
@@ -18,4 +19,4 @@ database_healthcheck:
   interval: 10s
   timeout: 5s
   retries: 5
-  start_period: 10s # Optional: Gives the DB time to run init scripts
+  start_period: 10s

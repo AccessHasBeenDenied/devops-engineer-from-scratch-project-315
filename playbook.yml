@@ -19,19 +19,23 @@
 # -  migration
 
 ---
-- name: Webservers Deployment
-  hosts: webservers
+- name: All Servers Preparation
+  hosts: all
   become: true
   roles:
     - role: common
-    - role: nginx
-    - role: certbot
+
+# - name: Webservers Deployment
+#   hosts: webservers
+#   become: true
+#   roles:
+#     - role: nginx
+#     - role: certbot
 
 - name: Worker Deployment
   hosts: workers
   become: true
   roles:
-    - role: common
     - role: docker
     - role: worker
 
@@ -39,5 +43,5 @@
   hosts: db
   become: true
   roles:
-    - role: common
+    - role: docker
     - role: database

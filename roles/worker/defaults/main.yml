@@ -1,2 +1,14 @@
 ---
 # defaults file for worker
+worker_data_dir: /srv/data/worker
+worker_log_dir: /srv/logs/worker
+
+worker_name: worker
+worker_image: bash
+worker_restart_policy: unless-stopped
+worker_env: {}
+worker_ports: 
+  - "8080:8080"
+worker_volumes:
+  - "{{ worker_data_dir }}:/app/worker/data"
+worker_healthcheck: {}

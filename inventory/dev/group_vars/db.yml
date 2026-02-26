@@ -1,6 +1,0 @@
-ufw_rules:
-  - description: Allow Postgres
-    proto: tcp
-    src: 127.0.0.1
-    port: 5432
-    rule: allow
