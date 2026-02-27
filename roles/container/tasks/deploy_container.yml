@@ -6,10 +6,13 @@
     name: "{{ container_name }}"
     image: "{{ current_image }}"
     command: "{{ container_command }}"
+    command_handling: "{{ container_command_handling }}"
+    entrypoint: "{{ container_entrypoint }}"
     env: "{{ container_env }}"
     ports: "{{ container_ports }}"
     volumes:  "{{ container_volumes }}"
     healthcheck: "{{ container_healthcheck }}"
+    restart_policy: "{{ container_restart_policy }}"
     state: present
 - name: Start Container
   community.docker.docker_container:

@@ -5,7 +5,9 @@ container_log_dir: /srv/logs/container
 
 container_name: container
 container_image: bash
-container_command: ''
+container_command: []
+container_entrypoint: []
+container_command_handling: compatibility
 container_restart_policy: unless-stopped
 container_env: {}
 container_ports: 
