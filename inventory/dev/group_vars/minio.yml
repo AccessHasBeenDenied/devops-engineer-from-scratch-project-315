@@ -1,0 +1,17 @@
+container_image: minio/minio:latest
+container_name: minio
+container_command: server /data --console-address ":9001"
+container_data_dir: /srv/data/minio
+container_log_dir: /srv/logs/minio
+container_ports:
+  - 9000:9000
+  - 9001:9001
+container_env:
+  MINIO_ROOT_USER: "{{ minio_user }}"
+  MINIO_ROOT_PASSWORD: "{{ minio_password }}"
+container_healthcheck:
+  test: ["CMD-SHELL", "curl -f http://localhost:9000/minio/health/live"]
+  interval: 10s
+  timeout: 5s
+  retries: 3
+  start_period: 30s

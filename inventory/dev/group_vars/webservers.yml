@@ -1,0 +1,4 @@
+nginx_upstreams:
+- name: worker
+  servers:
+    - "localhost:8080"

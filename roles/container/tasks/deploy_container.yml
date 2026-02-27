@@ -3,19 +3,20 @@
     name: "{{ current_image }}"
 - name: Create/Update Container
   community.docker.docker_container:
-    name: "{{ worker_name }}"
+    name: "{{ container_name }}"
     image: "{{ current_image }}"
-    env: "{{ worker_env }}"
-    ports: "{{ worker_ports }}"
-    volumes:  "{{ worker_volumes }}"
-    healthcheck: "{{ worker_healthcheck }}"
+    command: "{{ container_command }}"
+    env: "{{ container_env }}"
+    ports: "{{ container_ports }}"
+    volumes:  "{{ container_volumes }}"
+    healthcheck: "{{ container_healthcheck }}"
     state: present
 - name: Start Container
   community.docker.docker_container:
-    name: "{{ worker_name }}"
+    name: "{{ container_name }}"
     state: started
 - name: Wait Healthy
   community.docker.docker_container:
-    name: "{{ worker_name }}"
+    name: "{{ container_name }}"
     state: healthy
-    healthy_wait_timeout: "{{ worker_healthy_wait_timeout }}"
+    healthy_wait_timeout: "{{ container_healthy_wait_timeout }}"

@@ -22,26 +22,46 @@
 - name: All Servers Preparation
   hosts: all
   become: true
+  tags:
+    - common
   roles:
     - role: common
 
-# - name: Webservers Deployment
-#   hosts: webservers
-#   become: true
-#   roles:
-#     - role: nginx
-#     - role: certbot
-
-- name: Worker Deployment
-  hosts: workers
+- name: minio Deployment
+  hosts: minio
   become: true
+  tags:
+    - minio
   roles:
     - role: docker
-    - role: worker
+      when: env == "dev"
+    - role: container
+      when: env == "dev"
 
 - name: Database Deployment
   hosts: db
   become: true
+  tags:
+    - db
   roles:
     - role: docker
-    - role: database
+    - role: container
+
+- name: Worker Deployment
+  hosts: workers
+  become: true
+  tags:
+    - worker
+  roles:
+    - role: docker
+    - role: container
+
+- name: Webservers Deployment
+  hosts: webservers
+  become: true
+  tags:
+    - webserver
+  roles:
+    - role: nginx
+#     - role: certbot
+
