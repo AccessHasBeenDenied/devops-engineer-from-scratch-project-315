@@ -27,30 +27,30 @@
   roles:
     - role: common
 
-- name: minio Deployment
-  hosts: minio
+- name: S3 Deployment
+  hosts: s3
   become: true
   tags:
-    - minio
+    - s3
   roles:
     - role: docker
       when: env == "dev"
     - role: container
       when: env == "dev"
   tasks:
-    - name: Minio Provisioning
+    - name: S3 Provisioning
       ansible.builtin.include_role:
         name: container
       vars:
-        container_name: minio_provisioner
+        container_name: s3_provisioner
         container_image: minio/mc
         container_ports: []
         container_healthcheck: {}
         container_restart_policy: on-failure
         container_entrypoint: >
           /bin/sh -c "
-          /usr/bin/mc alias set minio http://{{ ansible_host }}:9000 {{ minio_user }} {{ minio_password }};
-          /usr/bin/mc mb minio/{{ bucket_name }};
+          /usr/bin/mc alias set s3 {{ s3_endpoint }} {{ minio_user }} {{ minio_password }};
+          /usr/bin/mc mb s3/{{ bucket_name }};
           exit 0;
           "
        
