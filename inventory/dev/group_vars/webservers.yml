@@ -1,3 +1,5 @@
+domain_name: bulletin.example.ru
+
 # frontend static files configuration
 frontend_artifact: https://registry.npmjs.org/@_accesshasbeendenied/project-devops-deploy-frontend/-/project-devops-deploy-frontend-0.0.5.tgz
 
@@ -7,10 +9,13 @@ certbot_create_if_missing: true
 certbot_create_method: webroot
 certbot_testmode: true
 certbot_certs:
-  - name: certbot-test.servercheck.in
+  - name: "{{ domain_name }}"
     webroot: "{{ vhost_root }}"
     domains:
-      - certbot-test.servercheck.in
+      - "{{ domain_name }}"
+    deploy_hook: >-
+      mkdir -p /etc/nginx/ssl;
+      cp -Lr /etc/letsencrypt/live/{{ domain_name }} /etc/nginx/ssl;
 
 # nginx configuration
 vhost_root: /var/www/html

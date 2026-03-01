@@ -1,23 +1,3 @@
-# Что надо настроить:
-
-# webservers
-# - certbot https://github.com/geerlingguy/ansible-role-certbot
-# - configure nginx https://github.com/geerlingguy/ansible-role-nginx
-# - caching
-# - redirect to https
-
-# worker
-# - install docker compose
-# - configure user
-# - configure firewall
-# - configure persistent volumes
-# - configure s3
-# - docker run
-
-# db
-# - for db
-# -  migration
-
 ---
 - name: All Servers Preparation
   hosts: all
@@ -27,7 +7,7 @@
   roles:
     - role: common
 
-- name: S3 Deployment
+- name: S3 Deployment [dev only]
   hosts: s3
   become: true
   tags:
@@ -53,7 +33,7 @@
           /usr/bin/mc mb s3/{{ bucket_name }};
           exit 0;
           "
-       
+
 
 - name: Database Deployment
   hosts: db
@@ -81,7 +61,7 @@
   roles:
     - role: nginx
       vars:
-        nginx_vhosts: 
+        nginx_vhosts:
           - filename: "{{ domain_name }}.80.conf"
             listen: "80 default_server"
             server_name: "{{ domain_name }}"
@@ -94,7 +74,9 @@
               location / {
                   return 301 https://$server_name$request_uri;
               }
+      when: env != "dev"
     - role: certbot
+      when: env != "dev"
 
 - name: Webservers Deployment
   hosts: webservers
@@ -108,7 +90,7 @@
       ansible.builtin.unarchive:
         src: "{{ frontend_artifact }}"
         dest: "{{ vhost_root }}"
-        remote_src: yes
+        remote_src: true
         include:
           - "package/dist/"
         extra_opts:

@@ -2,14 +2,29 @@
 [![Actions Status](https://github.com/AccessHasBeenDenied/devops-engineer-from-scratch-project-315/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AccessHasBeenDenied/devops-engineer-from-scratch-project-315/actions)
 
 
-### Testing Playbook
+### How to run
+
+#### prod
 
 ```
-vagrant up
-docker run --rm -ti -v $(pwd):/workdir alpine/ansible bash
-cd workdir
-ansible-galaxy install -r requirements.yml
-eval `ssh-agent -s`
-ssh-add id_rsa
-ansible-playbook -i inventory/dev -u vagrant playbook.yml
+make deploy/prod
 ```
+
+It deploys 
+
+- postgres database in docker
+- letsencrypt certificate
+- bulletin app in docker
+- nginx reverse proxy
+- frontend static content
+
+#### dev
+
+```
+make infra-up/dev
+make deploy/dev
+```
+
+`dev` is local vagrant environment which fires up a VM and deploy the app to it.  
+It deploys `minio` as a local s3 storage but skips `letsencrypt` certificate.  
+`secrets.yml` file, which contains all the secrets, is not encrypted on purpose to show its structure.

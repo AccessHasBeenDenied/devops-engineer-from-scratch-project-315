@@ -1,4 +1,4 @@
-# infra
+# infra up
 infra-up/dev:
 	@echo "Starting dev environment..."
 	vagrant up
@@ -13,4 +13,4 @@ deploy/dev:
 
 deploy/prod:
 	@echo "Starting prod deployment..."
-	ansible-playbook -i inventory/prod playbook.yml
+	ansible-playbook -i inventory/prod --ask-vault-pass playbook.yml

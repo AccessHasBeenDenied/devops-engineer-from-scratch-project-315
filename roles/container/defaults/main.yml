@@ -10,7 +10,7 @@ container_entrypoint: []
 container_command_handling: compatibility
 container_restart_policy: unless-stopped
 container_env: {}
-container_ports: 
+container_ports:
   - "8080:8080"
 container_volumes:
   - "{{ container_data_dir }}:/app/container/data"

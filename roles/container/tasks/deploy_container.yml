@@ -1,3 +1,4 @@
+---
 - name: Pull image
   community.docker.docker_image_pull:
     name: "{{ current_image }}"
@@ -10,7 +11,7 @@
     entrypoint: "{{ container_entrypoint }}"
     env: "{{ container_env }}"
     ports: "{{ container_ports }}"
-    volumes:  "{{ container_volumes }}"
+    volumes: "{{ container_volumes }}"
     healthcheck: "{{ container_healthcheck }}"
     restart_policy: "{{ container_restart_policy }}"
     state: present

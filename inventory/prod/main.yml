@@ -4,6 +4,8 @@ all:
       hosts:
         webserver
     workers:
-
+      hosts:
+        webserver
     db:
-
+      hosts:
+        dbserver
