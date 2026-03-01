@@ -1,3 +1,0 @@
-warn_list:
-  # Rules to downgrade from errors to warnings
-  - 'package-latest'
