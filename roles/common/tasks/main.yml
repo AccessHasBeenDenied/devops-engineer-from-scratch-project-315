@@ -1,5 +1,0 @@
----
-# tasks file for common
-
-- name: Common Packages
-  ansible.builtin.include_tasks: packages.yml

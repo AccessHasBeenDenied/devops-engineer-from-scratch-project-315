@@ -1,12 +1,4 @@
 ---
-- name: All Servers Preparation
-  hosts: all
-  become: true
-  tags:
-    - common
-  roles:
-    - role: common
-
 - name: S3 Deployment [dev only]
   hosts: s3
   become: true
